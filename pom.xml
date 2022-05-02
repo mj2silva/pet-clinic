@@ -47,7 +47,6 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <configuration>
                         <goals>install</goals>
-                        <serverId>my-server</serverId>
                     </configuration>
                 </plugin>
             </plugins>
