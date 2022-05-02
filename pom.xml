@@ -14,13 +14,13 @@
     </parent>
     <groupId>com.msilva</groupId>
     <artifactId>pet-clinic</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>pet-clinic</name>
     <description>pet-clinic</description>
 
     <scm>
         <developerConnection>scm:git:git@github.com:mj2silva/pet-clinic.git</developerConnection>
-      <tag>pet-clinic-0.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
