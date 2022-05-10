@@ -7964,7 +7964,9 @@ strong {
   -ms-transition: all 0.15s; }
 
 .navbar li > a {
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  border-radius: 10px;
+}
 
 .navbar .navbar-text {
   margin-top: 0;
