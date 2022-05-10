@@ -1,19 +1,15 @@
 package com.msilva.petclinic.bootstrap;
 
-import com.msilva.petclinic.model.Owner;
-import com.msilva.petclinic.model.Pet;
-import com.msilva.petclinic.model.PetType;
-import com.msilva.petclinic.model.Vet;
+import com.msilva.petclinic.model.*;
 import com.msilva.petclinic.services.OwnerService;
 import com.msilva.petclinic.services.PetTypeService;
+import com.msilva.petclinic.services.SpecialtyService;
 import com.msilva.petclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -21,15 +17,23 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialtyService specialtyService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtiesService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialtyService = specialtiesService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        if (petTypeService.findAll().isEmpty()) {
+            loadData();
+        }
+    }
+
+    private void loadData() {
         System.out.println("Loading initial data:");
 
         // Loading pet types
@@ -72,19 +76,19 @@ public class DataLoader implements CommandLineRunner {
         Pet dumE = new Pet();
 
         ducke.setName("Ducke");
-        ducke.setPetType(dog);
+        ducke.setPetType(savedDogPetType);
         ducke.setOwner(odi);
         ducke.setBirthDate(LocalDate.of(2018, Month.DECEMBER, 15));
         odi.getPets().add(ducke);
 
         logan.setName("Logan Spielberg");
-        logan.setPetType(cat);
+        logan.setPetType(savedCatPetType);
         logan.setOwner(manuel);
         logan.setBirthDate(LocalDate.of(2020, Month.MAY, 20));
         manuel.getPets().add(logan);
 
         dumE.setName("Dum-E");
-        dumE.setPetType(dog);
+        dumE.setPetType(savedDogPetType);
         dumE.setOwner(tony);
         dumE.setBirthDate(LocalDate.of(2008, Month.JULY, 25));
         tony.getPets().add(dumE);
@@ -96,18 +100,36 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Loaded owners and pets...");
 
         // Loading vets
-        Vet vet1 = new Vet();
-        Vet vet2 = new Vet();
 
-        vet1.setFirstName("Natasha");
-        vet1.setLastName("Romanov");
+        Specialty radiology = new Specialty();
+        Specialty surgery = new Specialty();
+        Specialty dentistry = new Specialty();
 
-        vet2.setFirstName("Scott");
-        vet2.setLastName("Lang");
+        radiology.setName("radiology");
+        surgery.setName("surgery");
+        dentistry.setName("dentistry");
 
-        vetService.save(vet1);
-        vetService.save(vet2);
+        Specialty savedRadiologySpecialty = specialtyService.save(radiology);
+        Specialty savedSurgerySpecialty = specialtyService.save(surgery);
+        Specialty savedDentistrySpecialty = specialtyService.save(dentistry);
 
-        System.out.println("Loaded vets...");
+
+        Vet natasha = new Vet();
+        Vet scott = new Vet();
+
+        natasha.setFirstName("Natasha");
+        natasha.setLastName("Romanov");
+        natasha.getSpecialties().add(savedRadiologySpecialty);
+        natasha.getSpecialties().add(savedDentistrySpecialty);
+
+        scott.setFirstName("Scott");
+        scott.setLastName("Lang");
+        scott.getSpecialties().add(savedRadiologySpecialty);
+        scott.getSpecialties().add(savedSurgerySpecialty);
+
+        vetService.save(natasha);
+        vetService.save(scott);
+
+        System.out.println("Loaded vets and specialties...");
     }
 }
