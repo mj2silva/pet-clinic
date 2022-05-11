@@ -76,21 +76,18 @@ public class DataLoader implements CommandLineRunner {
 
         ducke.setName("Ducke");
         ducke.setPetType(savedDogPetType);
-        ducke.setOwner(odi);
         ducke.setBirthDate(LocalDate.of(2018, Month.DECEMBER, 15));
-        odi.getPets().add(ducke);
+        odi.addPet(ducke);
 
         logan.setName("Logan Spielberg");
         logan.setPetType(savedCatPetType);
-        logan.setOwner(manuel);
         logan.setBirthDate(LocalDate.of(2020, Month.MAY, 20));
-        manuel.getPets().add(logan);
+        manuel.addPet(logan);
 
         dumE.setName("Dum-E");
         dumE.setPetType(savedDogPetType);
-        dumE.setOwner(tony);
         dumE.setBirthDate(LocalDate.of(2008, Month.JULY, 25));
-        tony.getPets().add(dumE);
+        tony.addPet(dumE);
 
         ownerService.save(manuel);
         ownerService.save(odi);
@@ -117,13 +114,13 @@ public class DataLoader implements CommandLineRunner {
 
         natasha.setFirstName("Natasha");
         natasha.setLastName("Romanov");
-        natasha.getSpecialties().add(savedRadiologySpecialty);
-        natasha.getSpecialties().add(savedDentistrySpecialty);
+        natasha.addSpecialty(savedRadiologySpecialty);
+        natasha.addSpecialty(savedDentistrySpecialty);
 
         scott.setFirstName("Scott");
         scott.setLastName("Lang");
-        scott.getSpecialties().add(savedRadiologySpecialty);
-        scott.getSpecialties().add(savedSurgerySpecialty);
+        scott.addSpecialty(savedRadiologySpecialty);
+        scott.addSpecialty(savedSurgerySpecialty);
 
         vetService.save(natasha);
         vetService.save(scott);
