@@ -1,10 +1,7 @@
 package com.msilva.petclinic.bootstrap;
 
 import com.msilva.petclinic.model.*;
-import com.msilva.petclinic.services.OwnerService;
-import com.msilva.petclinic.services.PetTypeService;
-import com.msilva.petclinic.services.SpecialtyService;
-import com.msilva.petclinic.services.VetService;
+import com.msilva.petclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +15,14 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtiesService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtiesService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialtyService = specialtiesService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -46,7 +45,7 @@ public class DataLoader implements CommandLineRunner {
         PetType savedDogPetType = petTypeService.save(dog);
         PetType savedCatPetType = petTypeService.save(cat);
 
-        System.out.println("Loaded pet types...");
+        System.out.println("Pet types READY!");
 
         // Loading owners and pets
         Owner manuel = new Owner();
@@ -97,7 +96,7 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(odi);
         ownerService.save(tony);
 
-        System.out.println("Loaded owners and pets...");
+        System.out.println("Owners and pets READY!");
 
         // Loading vets
 
@@ -112,7 +111,6 @@ public class DataLoader implements CommandLineRunner {
         Specialty savedRadiologySpecialty = specialtyService.save(radiology);
         Specialty savedSurgerySpecialty = specialtyService.save(surgery);
         Specialty savedDentistrySpecialty = specialtyService.save(dentistry);
-
 
         Vet natasha = new Vet();
         Vet scott = new Vet();
@@ -130,6 +128,18 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(natasha);
         vetService.save(scott);
 
-        System.out.println("Loaded vets and specialties...");
+        System.out.println("Vets and specialties READY!");
+
+        Visit loganVisit = new Visit();
+        loganVisit.setPet(logan);
+        loganVisit.setDate(LocalDate.now());
+        loganVisit.setDescription("Logan visit for vaccines against the flu");
+
+        visitService.save(loganVisit);
+
+        System.out.println("Visits READY!");
+
+        System.out.println("Finished bootstrap data initialization, we are ready to proceed!");
+        System.out.println("\uD83D\uDE80 \uD83D\uDE80 \uD83D\uDE80");
     }
 }
