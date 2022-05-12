@@ -4,4 +4,4 @@
 
 Personal version of the classic [Spring Pet Clinic Application](https://github.com/spring-projects/spring-petclinic).
 
-Created with Maven 2.6 and Java 17
+Created with Spring Boot 2.6 and Java 17
