@@ -10,11 +10,11 @@ executors:
 
     # Configuration for usage of Java 17 in maven_test execution
     # https://circleci.com/developer/images/image/cimg/openjdk
-    java-17:
+    java_17:
         docker:
             - image: cimg/openjdk:17.0.3
     workflows:
         maven_test:
     jobs:
         - maven/test:
-            executor: java-17
+            executor: java_17
