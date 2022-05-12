@@ -1,0 +1,20 @@
+# Circle CI configuration file
+# Based on https://circleci.com/developer/orbs/orb/circleci/maven
+#
+version: 2.1
+
+orbs:
+    maven: circleci/maven@1.3.0
+
+executors:
+
+    # Configuration for usage of Java 17 in maven_test execution
+    # https://circleci.com/developer/images/image/cimg/openjdk
+    java-17:
+        docker:
+            - image: cimg/openjdk:17.0.3
+    workflows:
+        maven_test:
+    jobs:
+        - maven/test:
+            executor: java-17
